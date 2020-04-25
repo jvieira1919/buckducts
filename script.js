@@ -5,22 +5,22 @@ function buildPage() {
         console.log("--- loop starting---");
         console.log(hours[i]);
         var hour = hours[i];
-        var newRow = createRow(hour);
+        var text = localStorage.getItem(hours[i]) || "";
+        var newRow = createRow(hour, text);
         timeBlock.append(newRow);
     };
 
-
-}
-function saveNote() {
-    console.log(this.id);
-    var text = $("#input-" + this.id).val();
-    localStorage.setItem(text);
-    console.log(text);
-    localStorage.getItem(text);
 };
 
-function createRow(currentHour) { //
+function saveNote() {
+    var key = $(this).attr("data-time");
+    var text = $("#input-" + this.id).val();
+    localStorage.setItem(key, text);
+};
+
+function createRow(currentHour, text) { //
     console.log("creating---a---new---row");
+    
     var parentDiv = $("<div>");
     parentDiv.addClass("row");
 
@@ -28,29 +28,20 @@ function createRow(currentHour) { //
     div1.addClass("col-md-1 hour time-block");
     div1.text(currentHour);
 
-
     var button = $("<button>");
     button.addClass("col-md-1 saveBtn");
     button.text("save");
     button.attr("id", currentHour);
-    
-
-
-
+    button.attr("data-time", currentHour)
     button.on("click", saveNote)
-
-
 
     var input = $("<input>");
     input.addClass("col-md-10");
     input.attr("id", "input-" + currentHour);
-
+    input.val(text);
     parentDiv.append(div1);
     parentDiv.append(input);
     parentDiv.append(button);
-
-
-
 
     return parentDiv;
 };
