@@ -1,5 +1,5 @@
 function buildPage() {
-    var hours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
+    var hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
     var timeBlock = $("#time-block-container");
     for (i = 0; i < hours.length; i++) {
         console.log("--- loop starting---");
@@ -18,27 +18,42 @@ function saveNote() {
     localStorage.setItem(key, text);
 };
 
-function createRow(currentHour, text) { //
+function createRow(theRowHour, text) { //
     console.log("creating---a---new---row");
-    
+
     var parentDiv = $("<div>");
     parentDiv.addClass("row");
 
     var div1 = $("<div>");
     div1.addClass("col-md-1 hour time-block");
-    div1.text(currentHour);
+   
+    div1.text(theRowHour);
 
     var button = $("<button>");
     button.addClass("col-md-1 saveBtn");
     button.text("save");
-    button.attr("id", currentHour);
-    button.attr("data-time", currentHour)
+    button.attr("id", theRowHour);
+    button.attr("data-time", theRowHour)
     button.on("click", saveNote)
 
     var input = $("<input>");
     input.addClass("col-md-10");
-    input.attr("id", "input-" + currentHour);
+    var idVal = "input-" + theRowHour
+    input.attr("id", idVal);
+    console.log(theRowHour)
     input.val(text);
+
+    var currentHour = (moment().format('H'));
+    if (theRowHour == currentHour) {
+        input.addClass("present")
+    }
+    else if (theRowHour < currentHour) {
+        input.addClass("past")
+    }
+    else if (theRowHour > currentHour) {
+        input.addClass("future")
+    };
+
     parentDiv.append(div1);
     parentDiv.append(input);
     parentDiv.append(button);
@@ -50,7 +65,7 @@ $(document).ready(function () {
     buildPage()
 
 
-    console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
+
     //console.log(new Date());
 
 
