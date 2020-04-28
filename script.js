@@ -60,7 +60,7 @@ function createRow(theRowHour, text) { //
     else if (theRowHour < currentHour) {
         input.addClass("past")
     }
-    else  (theRowHour > currentHour) {
+    else if (theRowHour > currentHour) {
         input.addClass("future")
     };
 
