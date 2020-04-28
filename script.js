@@ -26,8 +26,18 @@ function createRow(theRowHour, text) { //
 
     var div1 = $("<div>");
     div1.addClass("col-md-1 hour time-block");
-   
-    div1.text(theRowHour);
+  
+    var theRowHour12 = ""
+
+    if (theRowHour>12) {
+        theRowHour12 = (theRowHour-12) + "pm";
+    } else if (theRowHour === 12) {
+        theRowHour12 = theRowHour+"pm";
+    }   else {
+        theRowHour12 = theRowHour+"am";
+    }
+
+    div1.text(theRowHour12);
 
     var button = $("<button>");
     button.addClass("col-md-1 saveBtn");
@@ -50,7 +60,7 @@ function createRow(theRowHour, text) { //
     else if (theRowHour < currentHour) {
         input.addClass("past")
     }
-    else if (theRowHour > currentHour) {
+    else  (theRowHour > currentHour) {
         input.addClass("future")
     };
 
@@ -65,7 +75,7 @@ $(document).ready(function () {
     buildPage()
 
 
-
+    
     //console.log(new Date());
 
 
